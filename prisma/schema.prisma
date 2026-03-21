@@ -1,0 +1,106 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Message {
+  id                String @id @default(uuid())
+  content           String
+  role              MessageRole
+  conv_id           String
+  embedding         Unsupported("vector(1536)")?
+  position          Int 
+  createdAt         DateTime @default(now())
+
+  startSegment      Segment[] @relation("segment-start")
+  endSegment      Segment[] @relation("segment-end")
+
+  @@index([conv_id, position])
+}
+
+model Segment {
+  id                String @id @default(uuid())
+  start_message     String 
+  end_message       String 
+  conv_id           String
+  drift_score       Float
+  topic_order       Int 
+  createdAt         DateTime @default(now())
+
+  startMessage      Message @relation("segment-start", fields: [start_message], references: [id])
+  endMessage        Message @relation("segment-end", fields: [end_message], references: [id])
+  node              Node? @relation("node-segment")
+} 
+
+model Node {
+  id                String @id @default(uuid())
+  segment_id        String @unique
+  summary           String
+  label             String
+  embedding         Unsupported("vector(1536)")?
+  version           Int
+  createdAt         DateTime @default(now()) 
+  
+  segment           Segment @relation("node-segment", fields: [segment_id], references: [id])
+  outgoingEdge      Edge[] @relation("out-edge")
+  incomingEdge      Edge[] @relation("in-edge")
+}
+
+model Edge {
+  id                String @id @default(uuid())
+  from_node         String
+  to_node           String
+  similarity        Float
+  type              EdgeType
+  is_active         Boolean @default(true)
+  createdAt         DateTime @default(now())
+  
+  fromNode          Node @relation("out-edge", fields: [from_node], references: [id])
+  toNode            Node @relation("in-edge", fields: [to_node], references: [id])
+  
+}
+
+model Experiment {
+  id                String @id @default(uuid())
+  config            Json?
+  createdAt         DateTime @default(now())
+
+  result            Result? @relation("result-experiment")
+}
+
+model Result {
+  id                String @id @default(uuid())
+  answer            String
+  query_id          String @unique
+  scores            Json?
+  experiment_id     String @unique
+  condition         String
+  createdAt         DateTime @default(now())
+
+  experiment        Experiment @relation("result-experiment", fields: [experiment_id], references: [id])
+  query             Query @relation("result-query", fields: [query_id], references: [id])
+}
+
+model Query {
+  id                String @id @default(uuid())
+  text              String
+  embedding         Unsupported("vector(1536)")?
+  createdAt         DateTime @default(now())
+
+  result            Result? @relation("result-query")
+}
+
+enum MessageRole {
+  ASSISTANT
+  USER
+}
+
+enum EdgeType {
+  SEMANTIC
+  TEMPORAL
+}
