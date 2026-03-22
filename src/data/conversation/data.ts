@@ -1,6 +1,7 @@
-[
+export const convData =  [
   {
     "id": "1",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "What is a vector database?",
     "position": 1,
@@ -8,6 +9,7 @@
   },
   {
     "id": "2",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "A vector database is a specialized database designed to store, index, and retrieve high-dimensional vector embeddings efficiently. These embeddings are often generated from machine learning models and represent data such as text, images, or audio in numerical form. Vector databases use similarity search techniques like cosine similarity or Euclidean distance to find the closest matches.",
     "position": 2,
@@ -15,6 +17,7 @@
   },
   {
     "id": "3",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "How is it different from SQL databases?",
     "position": 3,
@@ -22,6 +25,7 @@
   },
   {
     "id": "4",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "Traditional SQL databases store structured data and are optimized for exact match queries using indexes like B-trees. In contrast, vector databases are optimized for similarity search on embeddings. Instead of matching exact values, they retrieve results based on closeness in vector space, which is essential for AI applications like semantic search.",
     "position": 4,
@@ -30,6 +34,7 @@
 
   {
     "id": "5",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "What is an embedding?",
     "position": 5,
@@ -37,6 +42,7 @@
   },
   {
     "id": "6",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "An embedding is a numerical representation of data in a high-dimensional space. For example, text embeddings convert sentences into vectors such that semantically similar sentences are closer together in that space. These are generated using models like transformers and are widely used in NLP, recommendation systems, and search.",
     "position": 6,
@@ -45,6 +51,7 @@
 
   {
     "id": "7",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "Switching topic, what is machine learning?",
     "position": 7,
@@ -52,6 +59,7 @@
   },
   {
     "id": "8",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "Machine learning is a subset of artificial intelligence that enables systems to learn patterns from data and improve performance over time without being explicitly programmed. It involves training models on datasets so they can make predictions or decisions based on new inputs.",
     "position": 8,
@@ -60,6 +68,7 @@
 
   {
     "id": "9",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "What are types of ML?",
     "position": 9,
@@ -67,6 +76,7 @@
   },
   {
     "id": "10",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "There are three main types of machine learning: supervised learning, where models learn from labeled data; unsupervised learning, where patterns are discovered without labels; and reinforcement learning, where agents learn by interacting with an environment and receiving rewards or penalties.",
     "position": 10,
@@ -75,6 +85,7 @@
 
   {
     "id": "11",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "Now tell me about system design basics",
     "position": 11,
@@ -82,6 +93,7 @@
   },
   {
     "id": "12",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "System design involves designing scalable, reliable, and efficient systems. It includes understanding requirements, choosing appropriate architectures like monolith or microservices, handling scalability using load balancing and caching, and ensuring fault tolerance through redundancy.",
     "position": 12,
@@ -90,6 +102,7 @@
 
   {
     "id": "13",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "What is load balancing?",
     "position": 13,
@@ -97,6 +110,7 @@
   },
   {
     "id": "14",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "Load balancing is the process of distributing incoming network traffic across multiple servers to ensure no single server becomes overwhelmed. It improves reliability and performance by utilizing resources efficiently and providing failover capabilities.",
     "position": 14,
@@ -105,6 +119,7 @@
 
   {
     "id": "15",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "Explain caching briefly",
     "position": 15,
@@ -112,6 +127,7 @@
   },
   {
     "id": "16",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "Caching stores frequently accessed data in a faster storage layer like memory to reduce latency and database load. Systems like Redis or Memcached are commonly used for caching in distributed systems.",
     "position": 16,
@@ -120,6 +136,7 @@
 
   {
     "id": "17",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "Switch again, what is Docker?",
     "position": 17,
@@ -127,6 +144,7 @@
   },
   {
     "id": "18",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "Docker is a containerization platform that allows developers to package applications along with their dependencies into containers. These containers can run consistently across different environments, making deployment more predictable and scalable.",
     "position": 18,
@@ -135,6 +153,7 @@
 
   {
     "id": "19",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "What is Kubernetes then?",
     "position": 19,
@@ -142,6 +161,7 @@
   },
   {
     "id": "20",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "Kubernetes is an orchestration system for managing containerized applications. It automates deployment, scaling, and operations of containers, ensuring high availability and efficient resource utilization across clusters.",
     "position": 20,
@@ -150,6 +170,7 @@
 
   {
     "id": "21",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "Okay random question, what is your favorite programming language?",
     "position": 21,
@@ -157,6 +178,7 @@
   },
   {
     "id": "22",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "I do not have personal preferences, but many developers enjoy languages like Python for its simplicity, JavaScript for web development, and Go for building scalable backend systems due to its concurrency model.",
     "position": 22,
@@ -165,6 +187,7 @@
 
   {
     "id": "23",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "Why is Python so popular?",
     "position": 23,
@@ -172,6 +195,7 @@
   },
   {
     "id": "24",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "Python is popular because of its simple syntax, large ecosystem of libraries, and versatility. It is widely used in web development, data science, machine learning, automation, and scripting tasks.",
     "position": 24,
@@ -180,6 +204,7 @@
 
   {
     "id": "25",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "Go back to system design, what is database sharding?",
     "position": 25,
@@ -187,6 +212,7 @@
   },
   {
     "id": "26",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "Database sharding is a technique where a large database is split into smaller, more manageable pieces called shards. Each shard holds a subset of the data, allowing the system to scale horizontally and handle larger loads.",
     "position": 26,
@@ -195,6 +221,7 @@
 
   {
     "id": "27",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "What is replication?",
     "position": 27,
@@ -202,6 +229,7 @@
   },
   {
     "id": "28",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "Replication involves copying data from one database server to another to improve reliability and availability. It ensures that even if one server fails, data can still be accessed from replicas.",
     "position": 28,
@@ -210,6 +238,7 @@
 
   {
     "id": "29",
+    "conv_id" : "ch-01",
     "role": "user",
     "content": "Tell me something interesting",
     "position": 29,
@@ -217,6 +246,7 @@
   },
   {
     "id": "30",
+    "conv_id" : "ch-01",
     "role": "assistant",
     "content": "An interesting fact is that modern AI systems can generate embeddings that capture semantic meaning so effectively that even loosely related concepts can be linked through vector similarity, enabling powerful search and recommendation systems.",
     "position": 30,
