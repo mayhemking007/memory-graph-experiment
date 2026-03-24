@@ -5,8 +5,7 @@ export const ingestProcessor = async (message : any) => {
     const text = message.content;
     const content = normalizeText(text);
     const embedding = await generateEmbedding(content as string);
-    const vectorString = `[${embedding?.join(",")}]`;
-
-    return vectorString;
+    
+    return embedding;
     
 }
