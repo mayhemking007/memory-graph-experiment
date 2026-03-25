@@ -3,34 +3,36 @@ import { cosineSimilarity } from "../../utils/drift/cosineSimilarity.js"
 import { avg } from "../../utils/drift/vectorAvg.js"
 
 export type driftState = {
-    window : number[][],
-    currentSegmentStart : number,
+    window : number[][] ,
+    currentSegmentStart : string,
+    lastMessageId : string | null,
     topic_order : number 
 }
 
-export const createInitialDriftState = () : driftState => {
+export const createInitialDriftState = (firstMessageId : string) : driftState => {
     return {
         window : [],
-        currentSegmentStart : 1,
+        currentSegmentStart : firstMessageId,
+        lastMessageId : null,
         topic_order : 1
     }
 }
 
-export const driftService = (state : driftState, message : {embedding : number[], position : number}, config : typeof driftStateConfig) : {
+export const driftService = (state : driftState, message : {embedding : number[], position : number, id : string}, config : typeof driftStateConfig) : {
     state : driftState,
     isDrift : boolean,
     segment? : {
-      start : number,
-      end : number,
+      start : string,
+      end : string,
       topicOrder : number,
       driftScore : number  
     }
 } => {
 
-    const newWindow = [...state.window, message.embedding];
+    const newWindow = state.window.length >= config.windowSize ? [...state.window.slice(1), message.embedding] : [...state.window, message.embedding];
     if(newWindow.length < config.minMessage){
         return {
-            state : {...state, window : newWindow},
+            state : {...state, window : newWindow, lastMessageId : message.id},
             isDrift : false
         }
     }
@@ -42,17 +44,18 @@ export const driftService = (state : driftState, message : {embedding : number[]
 
     const drift = 1 - cosineSimilarity(prevAvg, currAvg);
 
-    if(drift > config.threshold){
+    if(drift > config.threshold && state.lastMessageId){
         return{
             state : {
                 window : [],
-                currentSegmentStart : message.position,
+                currentSegmentStart : message.id,
+                lastMessageId : message.id,
                 topic_order : state.topic_order + 1 
             },
             isDrift : true,
             segment : {
                 start : state.currentSegmentStart,
-                end : message.position - 1,
+                end : state.lastMessageId,
                 topicOrder : state.topic_order,
                 driftScore : drift
             }
@@ -60,7 +63,7 @@ export const driftService = (state : driftState, message : {embedding : number[]
     }
 
     return {
-        state : {...state, window : newWindow},
+        state : {...state, window : newWindow, lastMessageId : message.id},
         isDrift : false
     }
 }
