@@ -1,4 +1,5 @@
 import { prisma } from "../../db/prisma.js";
+import { nodeRunner } from "../node/node.runner.js";
 
 export const createSegment = async (segment : {
       start : string,
@@ -16,6 +17,7 @@ export const createSegment = async (segment : {
                 topic_order : segment.topicOrder
             }
         });
+        await nodeRunner(savedSegment);
 
     }
     catch(e){
@@ -34,7 +36,8 @@ export const createFinalSegment = async (drift : any, conv_id : string) => {
                 conv_id : conv_id,
                 drift_score : 0
             }
-        })
+        });
+        await nodeRunner(segment);
         return segment;
     }
     catch(e){
