@@ -28,6 +28,10 @@ export const nodeProcessor = async (messages : any, segmentId : string) => {
                 SET embedding = '${embeddingString}'
                 WHERE id = '${node.id}'`);
         });
+        const nodeSaved = await prisma.node.findFirst({
+            where : {segment_id :  segmentId}
+        });
+        return nodeSaved;
     }
     catch(e){
         console.log(e);

@@ -1,4 +1,5 @@
 import { prisma } from "../../db/prisma.js";
+import { edgeRunner } from "../edge/edge.runner.js";
 import { nodeProcessor } from "./node.processor.js";
 
 export const nodeRunner = async(segment : any) => {
@@ -28,7 +29,8 @@ export const nodeRunner = async(segment : any) => {
                 position: 'asc',
             },
         });
-        await nodeProcessor(messages, segment.id as string);
+        const node = await nodeProcessor(messages, segment.id as string);
+        await edgeRunner(node, segment.topic_order);
     }
     catch(e){
         console.log(e);
