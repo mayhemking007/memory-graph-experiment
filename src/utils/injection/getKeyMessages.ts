@@ -1,3 +1,4 @@
+import { injectionConfig } from "../../config/injection.config.js";
 import { prisma } from "../../db/prisma.js";
 
 export const getKeyMessages = async (nodeId : string) => {
@@ -14,10 +15,34 @@ export const getKeyMessages = async (nodeId : string) => {
             select : {position : true, conv_id : true}
         });
         if(!borderMessages) throw new Error("Cannot find border messages");
-        const startMessage = borderMessages[0];
-        const endMessage = borderMessages[1];
-        
-
+        const startMessages = await prisma.message.findMany({
+            where : {
+                conv_id : borderMessages.conv_id,
+                position : {
+                    gte : borderMessages[0].position,
+                    lte : borderMessages[0].position + injectionConfig.key_messages
+                }
+            },
+            orderBy : {position : "asc"}  
+        });
+        const endMessages = await prisma.message.findMany({
+            where : {
+                conv_id : borderMessages.conv_id,
+                position : {
+                    gte : borderMessages[1].position,
+                    lte : borderMessages[1].position + injectionConfig.key_messages
+                }
+            },
+            orderBy : {position : "asc"} ,
+            select : {content : true}
+        });
+        return {
+            nodeId : nodeId,
+            label : node.label,
+            summary : node.summary,
+            startMessages : startMessages,
+            endMessages : endMessages
+        }
     }
     catch(e){
         console.log(e);
