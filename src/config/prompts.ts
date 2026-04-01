@@ -29,4 +29,6 @@ Output strictly in the following JSON format:
 "label": "",
 "summary": ""
 }
-`
+`;
+
+export const promptForContextInjection = ``;

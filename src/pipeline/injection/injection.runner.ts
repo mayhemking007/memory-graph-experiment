@@ -19,7 +19,8 @@ export const injectionRunner = async (nodeIds : string[]) => {
             result.push(keyMessages);
         }
         const contextString = generateInjectionContext(result);
-        await injectionProcessor(contextString);
+        console.log(contextString);
+        // await injectionProcessor(contextString);
         
     }
     catch(e){

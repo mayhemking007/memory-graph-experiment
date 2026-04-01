@@ -1,3 +1,4 @@
+import { promptForNodeLabelAndSummay } from "../../config/prompts.js";
 import { prisma } from "../../db/prisma.js";
 import { generateEmbedding } from "../../openai/generateEmbedding.js";
 import { generateResponse } from "../../openai/generateResponse.js";
@@ -9,7 +10,7 @@ export const nodeProcessor = async (messages : any, segmentId : string) => {
         messageContent += `Message ${index}: \n[${message.role}] ${message.content}\n\n`;
     }
     try{
-        const response = await generateResponse(messageContent);
+        const response = await generateResponse(messageContent, promptForNodeLabelAndSummay);
         const resoponseJson = JSON.parse(response!);
         const {label, summary} = resoponseJson;
         const embedding = await generateEmbedding(summary as string);

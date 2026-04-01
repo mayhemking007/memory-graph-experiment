@@ -1,9 +1,7 @@
 import { promptForNodeLabelAndSummay } from "../config/prompts.js";
 import { openai } from "./openai.js"
 
-export const generateResponse = async(context : string) => {
-
-    const systemPrompt = promptForNodeLabelAndSummay;
+export const generateResponse = async(context : string, systemPrompt : string) => {
 
     const response = await openai.chat.completions.create({
         model : "gpt-4o-mini",
