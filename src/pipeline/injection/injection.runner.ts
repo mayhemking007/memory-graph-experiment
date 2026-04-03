@@ -8,20 +8,21 @@ import { injectionProcessor } from "./injection.processor.js";
 export const injectionRunner = async (nodeIds : string[]) => {
     const hops = injectionConfig.hop;
     try{
-        const choosenNodes = await prisma.node.findFirst({
-            where : {id : {in : nodeIds}}
-        });
-        const adjNodes = await expandGraph(choosenNodes, hops);
-        console.log(adjNodes);
+        // const choosenNodes = await prisma.node.findFirst({
+        //     where : {id : {in : nodeIds}},
+        //     select : {id : true}
+        // });
+        // console.log("Choosen nodes: ", choosenNodes);
+        const adjNodes = await expandGraph(nodeIds, hops);
+        console.log("Adjacent nodes: ", adjNodes);
         const result : any = [];
-        for(const nodeId of nodeIds){
+        for(const nodeId of adjNodes){
             const keyMessages = await getKeyMessages(nodeId);
             result.push(keyMessages);
         }
         const contextString = generateInjectionContext(result);
-        console.log(contextString);
         // await injectionProcessor(contextString);
-        
+        return contextString;
     }
     catch(e){
         console.log(e);

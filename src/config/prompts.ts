@@ -31,4 +31,9 @@ Output strictly in the following JSON format:
 }
 `;
 
-export const promptForContextInjection = ``;
+export const systempromptForContextInjection = `You are given relevant past conversation context.
+
+Use this context only if relevant to the user's question.
+Do not make up information outside this context.
+
+---\n\n`;
