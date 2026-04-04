@@ -27,7 +27,7 @@ export const ingestData = async () => {
         if(!driftState){
             driftState = createInitialDriftState(message.id);
         }
-        const result = driftService(driftState, {embedding : embedding!, position : message.position, id : message.id}, driftStateConfig)
+        const result = await driftService(driftState, {embedding : embedding!, position : message.position, id : message.id}, driftStateConfig)
         driftState = result.state;
 
         if(result.isDrift && result.segment){

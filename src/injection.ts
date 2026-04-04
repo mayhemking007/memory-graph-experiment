@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/', async (req, res) => {
+app.post('/inject', async (req, res) => {
   const nodeIds = req.body.nodeId;
   try{
     const context = await injectionRunner(nodeIds);

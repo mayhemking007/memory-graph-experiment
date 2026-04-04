@@ -1,5 +1,6 @@
 import type { driftStateConfig } from "../../config/driftState.config.js"
 import { cosineSimilarity } from "../../utils/drift/cosineSimilarity.js"
+import { lastMessage } from "../../utils/drift/secondLastMessage.js"
 import { avg } from "../../utils/drift/vectorAvg.js"
 
 export type driftState = {
@@ -18,7 +19,7 @@ export const createInitialDriftState = (firstMessageId : string) : driftState =>
     }
 }
 
-export const driftService = (state : driftState, message : {embedding : number[], position : number, id : string}, config : typeof driftStateConfig) : {
+export const driftService = async (state : driftState, message : {embedding : number[], position : number, id : string}, config : typeof driftStateConfig) : Promise<{
     state : driftState,
     isDrift : boolean,
     segment? : {
@@ -27,7 +28,7 @@ export const driftService = (state : driftState, message : {embedding : number[]
       topicOrder : number,
       driftScore : number  
     }
-} => {
+}> => {
 
     const newWindow = state.window.length >= config.windowSize ? [...state.window.slice(1), message.embedding] : [...state.window, message.embedding];
     if(newWindow.length < config.minMessage){
@@ -43,19 +44,20 @@ export const driftService = (state : driftState, message : {embedding : number[]
     const currAvg = avg(curr);
 
     const drift = 1 - cosineSimilarity(prevAvg, currAvg);
+    const secondLastMsg : any = state.lastMessageId === null ? null : await lastMessage(state.lastMessageId as string); 
 
     if(drift > config.threshold && state.lastMessageId){
         return{
             state : {
                 window : [],
-                currentSegmentStart : message.id,
-                lastMessageId : message.id,
+                currentSegmentStart : state.lastMessageId,
+                lastMessageId : state.lastMessageId,
                 topic_order : state.topic_order + 1 
             },
             isDrift : true,
             segment : {
                 start : state.currentSegmentStart,
-                end : state.lastMessageId,
+                end : secondLastMsg,
                 topicOrder : state.topic_order,
                 driftScore : drift
             }

@@ -1,4 +1,3 @@
-import { injectionConfig } from "../../config/injection.config.js";
 import { systempromptForContextInjection } from "../../config/prompts.js";
 
 export const generateInjectionContext = (data : any[]) => {
@@ -30,5 +29,5 @@ export const generateInjectionContext = (data : any[]) => {
         \n\n`;
         context += tempContext;
     }
-    return context;
+    return context + `\n Answer the user's question using this context when helpful.`;
 }
