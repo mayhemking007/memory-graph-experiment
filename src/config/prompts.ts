@@ -45,3 +45,57 @@ Do not quote the memory directly or refer to it as "context" or "provided
 information." Respond naturally.
 
 ---`;
+
+
+export const promptForEvaluation = `You are an evaluator for a QA system that uses selective memory.
+
+You will be given:
+- A user question
+- A model-generated answer
+- A set of memory nodes selected by the user
+
+Each node contains:
+- node_id
+- title
+- summary
+
+IMPORTANT:
+The selected nodes represent the ONLY memory available to the model.
+The model is NOT allowed to use any information outside these nodes.
+
+Your job is to evaluate the answer on:
+
+1. RELEVANCE (0 to 1)
+- Does the answer address the question?
+
+2. CONTEXT UTILIZATION (0 to 1)
+- Does the answer correctly use information from the selected nodes?
+
+3. CORRECTNESS (0 to 1)
+- Is the answer factually consistent with the selected nodes?
+
+4. HALLUCINATION (0 to 1)
+- Does the answer include ANY information not supported by the selected nodes?
+- Even if the information is generally true, if it is not present in the nodes, count it as hallucination.
+- 0 = fully grounded in nodes
+- 1 = mostly unsupported
+
+5. COHERENCE (1 to 5)
+- Is the answer clear, structured, and understandable?
+
+Strict rules:
+- Treat the selected nodes as the ONLY source of truth
+- Do NOT assume any external knowledge
+- If the answer includes information beyond the nodes → penalize hallucination
+- If the answer correctly says "I don't know" due to missing information → reward correctness and low hallucination
+
+Return STRICT JSON ONLY:
+
+{
+  "relevance": number,
+  "context_utilization": number,
+  "correctness": number,
+  "hallucination": number,
+  "coherence": number,
+  "notes": "short explanation"
+}`;

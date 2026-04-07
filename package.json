@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc -b && node ./dist/index.js",
-    "inject" : "tsc -b && node ./dist/injection.js"
+    "inject" : "tsc -b && node ./dist/injection.js",
+    "evaluation" : "tsc -b && node ./dist/pipeline/evaluation/evaluation.runner.js"
   },
   "keywords": [],
   "author": "",

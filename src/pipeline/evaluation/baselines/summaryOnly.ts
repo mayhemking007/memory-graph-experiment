@@ -3,7 +3,8 @@ import { openai } from "../../../openai/openai.js";
 import { generateAnswer } from "../../../utils/evaluation/generateAnswers.js";
 
 export const summaryOnly = async (query : string) => {
-    let context = "";
+    let context = `The following is a summary of a previous conversation the user had.
+Use it to answer their questions. \n`;
     for(const d of convData){
         context += d.content + '\n';
     }
@@ -12,7 +13,7 @@ export const summaryOnly = async (query : string) => {
         messages : [
             {
                 role : "user",
-                content : `Summarize the conversation below and only return summary \n\n ${context}` 
+                content : `Summarize the conversation below in 150-200 words and only return summary \n\n ${context}` 
             }
         ]
     });

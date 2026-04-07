@@ -14,7 +14,6 @@ export const injectionRunner = async (nodeIds : string[]) => {
         // });
         // console.log("Choosen nodes: ", choosenNodes);
         const adjNodes = await expandGraph(nodeIds, hops);
-        console.log("Adjacent nodes: ", adjNodes);
         const result : any = [];
         for(const nodeId of adjNodes){
             const keyMessages = await getKeyMessages(nodeId);

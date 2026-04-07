@@ -36,7 +36,7 @@ export const getKeyMessages = async (nodeId : string) => {
             orderBy : {position : "asc"},
             select : {content : true, role : true, id : true}
         });
-        console.log("Start messages: ", startMessages);
+        
         const endMessages = await prisma.message.findMany({
             where : {
                 conv_id : endMsg.conv_id,
@@ -48,7 +48,7 @@ export const getKeyMessages = async (nodeId : string) => {
             orderBy : {position : "asc"} ,
             select : {content : true, role : true, id : true}
         });
-        console.log("End messages: ", endMessages);
+        
         return {
             nodeId : nodeId,
             label : node.label,

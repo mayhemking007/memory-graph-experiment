@@ -1,7 +1,6 @@
 import { systempromptForContextInjection } from "../../config/prompts.js";
 
 export const generateInjectionContext = (data : any[]) => {
-    console.log("Generating injection context with data: ", data);
 
     let context = systempromptForContextInjection;
     for(const d of data){

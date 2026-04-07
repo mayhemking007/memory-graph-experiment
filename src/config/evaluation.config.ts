@@ -1,1 +1,1 @@
-export const injectionNodeIds = [];
+export const injectionNodeIds = ["fae0ac6e-a5af-4aed-87d7-1d79d1be5e75", "14d325dd-a897-4748-a7f5-d3312caad31b"];

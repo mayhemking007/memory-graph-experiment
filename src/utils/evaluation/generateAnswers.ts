@@ -1,7 +1,7 @@
 import { openai } from "../../openai/openai.js"
 
 export const generateAnswer = async(query : string, context : string) => {
-    const resposne = await openai.chat.completions.create({
+    const response = await openai.chat.completions.create({
         model : "gpt-4o-mini",
         messages : [
             {
@@ -14,5 +14,5 @@ export const generateAnswer = async(query : string, context : string) => {
             }
         ]
     });
-    return resposne.choices[0]?.message.content;
+    return response.choices[0]?.message.content;
 }
