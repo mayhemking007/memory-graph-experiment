@@ -28,5 +28,5 @@ export const generateInjectionContext = (data : any[]) => {
         \n\n`;
         context += tempContext;
     }
-    return context + `\n Answer the user's question using this context when helpful.`;
+    return context;
 }

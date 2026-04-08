@@ -44,6 +44,13 @@ from that session and cannot recall the specifics of that topic.
 Do not quote the memory directly or refer to it as "context" or "provided 
 information." Respond naturally.
 
+Answer the question ONLY using the provided context.
+
+If the answer cannot be found in the context, say:
+"I don't have enough information in the provided context."
+
+Do NOT add external knowledge.
+
 ---`;
 
 
@@ -88,6 +95,7 @@ Strict rules:
 - Do NOT assume any external knowledge
 - If the answer includes information beyond the nodes → penalize hallucination
 - If the answer correctly says "I don't know" due to missing information → reward correctness and low hallucination
+- Be strict. Any unsupported detail must be penalized.
 
 Return STRICT JSON ONLY:
 

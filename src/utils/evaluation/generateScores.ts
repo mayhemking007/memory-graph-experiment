@@ -30,6 +30,13 @@ Remember:
         ]
     });
     if(!response) throw new Error("Cannot generate scores");
+    const usage = response.usage;
+    const tokens = {
+        input_tokens: usage!.prompt_tokens,
+        output_tokens: usage!.completion_tokens,
+        total_tokens: usage!.total_tokens
+    }
     const result = response.choices[0]?.message.content!.replace(/```json/g, "").replace(/```/g, "").trim();
-    return JSON.parse(result as string);
+    const res =  JSON.parse(result as string);
+    return { ...res, input : tokens.input_tokens, output : tokens.output_tokens, total : tokens.total_tokens };
 }
