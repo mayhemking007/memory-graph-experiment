@@ -3,8 +3,7 @@ import { openai } from "../../../openai/openai.js";
 import { generateAnswer } from "../../../utils/evaluation/generateAnswers.js";
 
 export const summaryOnly = async (query : string) => {
-    let context = `The following is a summary of a previous conversation the user had.
-Use it to answer their questions. \n`;
+    let context = ``;
     for(const d of convData){
         context += d.content + '\n';
     }
@@ -17,7 +16,9 @@ Use it to answer their questions. \n`;
             }
         ]
     });
-    const summary = response.choices[0]?.message.content;
+    let summary = `The following is a summary of a previous conversation the user had.
+Use it to answer their questions. \n`;
+    summary += response.choices[0]?.message.content;
     const answer = await generateAnswer(query, summary as string);
     return answer; 
 } 
